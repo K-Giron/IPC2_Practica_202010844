@@ -24,4 +24,20 @@
         <PriceLevel3>9.2</PriceLevel3>
         <LastTotalUnitCost>7.8</LastTotalUnitCost>
     </Item>
+    <Item>
+        <ItemCode>BALL-00-2019-1</ItemCode>
+        <QuantityOnHand>0</QuantityOnHand>
+        <PriceLevel1>3.5</PriceLevel1>
+        <PriceLevel2>3.4</PriceLevel2>
+        <PriceLevel3>2.9</PriceLevel3>
+        <LastTotalUnitCost>2.26</LastTotalUnitCost>
+    </Item>
+    <Item>
+        <ItemCode>7MA-23-0004</ItemCode>
+        <QuantityOnHand>21</QuantityOnHand>
+        <PriceLevel1>9.55</PriceLevel1>
+        <PriceLevel2>9.4</PriceLevel2>
+        <PriceLevel3>9.2</PriceLevel3>
+        <LastTotalUnitCost>7.8</LastTotalUnitCost>
+    </Item>
 </ItemList>

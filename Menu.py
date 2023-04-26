@@ -1,9 +1,14 @@
 from os import system
 from tkinter.filedialog import askopenfilename
 from xml.dom import minidom
+from ListaSimple import ListaSimple
+from Item import Item
 
 
 class Menu:
+
+    itemsIngresados= ListaSimple()
+
     def __init__(self) -> None:
         self.opciones=[
             ' Cargar archivo',
@@ -45,10 +50,16 @@ class Menu:
             self.procesarInformacion(objetoXml)
             self.pausa()
         elif(opcion=='2'):
-            #self.graficarMuestra(self.muestraAnalizada)
+            top_margins=self.itemsIngresados.imprimir("margen")
+            for item in top_margins["margen1"]:
+                print(item.item,item.margen1)
+            for item in top_margins["margen2"]:
+                print(item.item,item.margen2)
+            for item in top_margins["margen3"]:
+                print(item.item,item.margen3)
             self.pausa()
         elif(opcion=='3'):
-            #self.analizarMuestra()
+            self.itemsIngresados.imprimir("inventario")
             self.pausa()
         elif(opcion=='4'):
             espera = input('\n\tUSAC - S1\n\tProyecto 1\n\tDesarrollado por Kevin Girón-202010844...')
@@ -57,3 +68,50 @@ class Menu:
             quit()
         else:
             self.mostrar()
+
+    def procesarInformacion(self, objetoXml):
+        print('Procesando informacion...')
+
+        itemCode = objetoXml.getElementsByTagName('ItemCode')
+        quantity = objetoXml.getElementsByTagName('QuantityOnHand')
+        precios1 = objetoXml.getElementsByTagName('PriceLevel1')
+        precios2 = objetoXml.getElementsByTagName('PriceLevel2')
+        precios3 = objetoXml.getElementsByTagName('PriceLevel3')
+        costosUnitario = objetoXml.getElementsByTagName('LastTotalUnitCost')
+
+        posicion = 0
+        for numeral in itemCode:
+            
+            codigos = itemCode[posicion].firstChild.data
+            cantidades = float(quantity[posicion].firstChild.data)
+            precio1 = float(precios1[posicion].firstChild.data)
+            precio2 = float(precios2[posicion].firstChild.data)
+            precio3 = float(precios3[posicion].firstChild.data)
+            costoUnitario = float(costosUnitario[posicion].firstChild.data)
+            posicion = posicion + 1
+            print(codigos,cantidades,precio1,precio2,precio3,costoUnitario)
+
+
+            # Verificar si el elemento ya está presente en la lista
+            nodo_actual = self.itemsIngresados.cabeza
+            encontrado = False
+
+            
+            if cantidades <= 0:
+                continue
+            while nodo_actual is not None:
+                if nodo_actual.dato.item ==  codigos:
+                    encontrado = True
+                    break
+                nodo_actual = nodo_actual.siguiente
+            
+            if not encontrado:
+                nuevoItem = Item(codigos,cantidades,precio1,precio2,precio3,costoUnitario)
+                self.itemsIngresados.agregar(nuevoItem)
+                print('Item agregado: ', nuevoItem.item)
+
+        
+        
+if __name__ == '__main__':
+    menu = Menu()
+    menu.mostrar(False) 
